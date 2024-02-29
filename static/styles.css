@@ -1,0 +1,144 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+}
+
+a {
+    text-decoration: none;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 2cm rgba(0, 0, 0, 0.2);
+    text-align: center;
+    background: rgba(255, 255, 255, 0.938);
+    /* Added more styles */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.container h1 {
+    font-size: 24px;
+    color: #000000;
+    padding: 10px;
+}
+
+.container p {
+    font-size: 18px;
+    color: #000000;
+    padding: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.button-container2 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #111111;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.button:hover {
+    background-color: #222222;
+}
+
+.button-red {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: rgb(87, 6, 6);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.button-red:hover {
+    background-color: rgb(124, 9, 9);
+}
+
+.button-yellow {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #574406;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.button-yellow:hover {
+    background-color: #80640b;
+}
+
+.button-green {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #095c32;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.button-green:hover {
+    background-color: rgb(11, 131, 111);
+}
+
+.maincontainer {
+    width: 1600px;
+    max-width: 85%;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 1cm rgba(0, 0, 0, 0.4);
+    text-align: center;
+    background: rgb(230, 230, 230);
+    /* Added more styles */
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.maincontainer h2 {
+    font-size: 24px;
+    color: #000000;
+    margin-top: -7px;
+}
