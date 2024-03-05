@@ -26,18 +26,58 @@ func DBcreate() {
 	DBopen()
 
 	// Create sql table if it does not exist
-	usersTable, err := DB.Prepare(`
+	processTable, err := DB.Prepare(`
+    CREATE TABLE if not exists PROCESSING(
+        EMAIL TEXT PRIMARY KEY,
+		NAME TEXT,
+		GENDER TEXT,
+		PHONE TEXT,
+		EVENT_NAME TEXT,
+		CREATED TEXT,
+		LIKES TEXT
+    )
+	`)
+	if err != nil {
+		log.Fatal(err)
+	}
+	processTable.Exec()
+
+	// Create sql table if it does not exist
+	participTable, err := DB.Prepare(`
     CREATE TABLE if not exists PARTICIPANTS(
         EMAIL TEXT PRIMARY KEY,
 		NAME TEXT,
+		GENDER TEXT,
 		PHONE TEXT,
+		CONTACT TEXT,
+		AGE TEXT,
+		AGE_GROUP TEXT,
+		SUBMISSION_FORM_TIME TEXT,
+		COMMENT TEXT,
 		CREATED TEXT
     )
 	`)
 	if err != nil {
 		log.Fatal(err)
 	}
-	usersTable.Exec()
+	participTable.Exec()
+
+	// Create sql table if it does not exist
+	eventsTable, err := DB.Prepare(`
+    CREATE TABLE if not exists EVENTS(
+        ID TEXT PRIMARY KEY,
+		NAME TEXT,
+		TIME TEXT,
+		SPOT TEXT,
+		AGE_GROUP TEXT,
+		COMMENT TEXT,
+		CREATED TEXT
+    )
+	`)
+	if err != nil {
+		log.Fatal(err)
+	}
+	eventsTable.Exec()
 
 	// Defer the closing of the database connection
 	defer DB.Close()

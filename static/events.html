@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>dbSD events</title>
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body class="background-image">
+        <div class="maincontainer">
+            <div class="button-container">
+                <a href="index.html" class="button">Home</a>
+                <a href="add_event.html" class="button-green">Add event</a>
+                <a href="edit_event.html" class="button">Edit event</a>
+                <a href="remove_event.html" class="button-red">Remove event</a>
+            </div>
+            <div class="singleAEvent">
+                <div class="eventID">ID</div>
+                <div class="eventName">Name</div>
+                <div class="eventTime">Time</div>
+                <div class="eventSpot">Spot</div>
+                <div class="eventAgeGroup">Age group</div>
+                <div class="eventComment">Comment</div>
+                <div class="eventCreated">Created</div>
+            </div>
+            {{ range .Events }}
+            <div class="singleAEvent">
+                <div class="eventID">{{ .ID }}</div>
+                <div class="eventName">{{ .Name }}</div>
+                <div class="eventTime">{{ .Time }}</div>
+                <div class="eventSpot">{{ .Spot }}</div>
+                <div class="eventAgeGroup">{{ .AgeGroup }}</div>
+                <div class="eventComment">{{ .Comment }}</div>
+                <div class="eventCreated">{{ .Created }}</div>
+            </div>
+            {{ end }}
+        </div>
+    </body>
+</html>

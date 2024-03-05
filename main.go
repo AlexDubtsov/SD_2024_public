@@ -1,8 +1,10 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/functions"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/helpers"
@@ -14,8 +16,16 @@ func main() {
 		helpers.DBcreate()
 	}
 
-	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	http.HandleFunc("/", functions.Homepage)
-	fmt.Println("Server is running at: http://localhost:8080\n ")
-	http.ListenAndServe("0.0.0.0:8080", nil)
+	fileserver := http.FileServer(http.Dir("./static/"))
+	http.Handle("/", fileserver)
+	http.HandleFunc("/basic", functions.BasicProcessListPage)
+	http.HandleFunc("/basicEvent", functions.BasicProcessEventPage)
+	fmt.Println("Server is running at: http://localhost:8080")
+	err := http.ListenAndServe("0.0.0.0:8080", nil)
+	if errors.Is(err, http.ErrServerClosed) {
+		fmt.Printf("Server closed\n")
+	} else if err != nil {
+		fmt.Printf("Error starting server: %s\n", err)
+		os.Exit(1)
+	}
 }
