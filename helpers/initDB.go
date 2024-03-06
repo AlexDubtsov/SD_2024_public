@@ -28,12 +28,16 @@ func DBcreate() {
 	// Create sql table if it does not exist
 	processTable, err := DB.Prepare(`
     CREATE TABLE if not exists PROCESSING(
-        EMAIL TEXT PRIMARY KEY,
+		ID INTEGER PRIMARY KEY,
+        EMAIL TEXT,
 		NAME TEXT,
 		GENDER TEXT,
 		PHONE TEXT,
+		BAGE_ID_AT_EVENT TEXT,
+		EVENT_ID TEXT,
 		EVENT_NAME TEXT,
-		CREATED TEXT,
+		EVENT_DATE TEXT,
+		DATE_CREATED TEXT,
 		LIKES TEXT
     )
 	`)

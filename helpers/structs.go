@@ -1,16 +1,20 @@
 package helpers
 
 type BasicSinglePerson struct {
+	ID        int
 	Email     string
 	Name      string
 	Gender    string
 	Phone     string
+	BageID    int
+	EventID   int
 	EventName string
+	EventDate string
 	Created   string
 	Likes     string
 }
 
-type ProcessTemplate struct {
+type BasicAllData struct {
 	AllData []BasicSinglePerson
 }
 
@@ -22,6 +26,13 @@ type BasicEvent struct {
 
 type TemplateBasicEvents struct {
 	AllEvents []BasicEvent
+}
+
+type TemplateBasicEventCreate struct {
+	EventName string
+	EventDate string
+	Text      string
+	Message   string
 }
 
 type SingleEvent struct {

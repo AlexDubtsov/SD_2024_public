@@ -18,8 +18,9 @@ func main() {
 
 	fileserver := http.FileServer(http.Dir("./static/"))
 	http.Handle("/", fileserver)
-	http.HandleFunc("/basic", functions.BasicProcessListPage)
+	http.HandleFunc("/basicList", functions.BasicProcessListPage)
 	http.HandleFunc("/basicEvent", functions.BasicProcessEventPage)
+	http.HandleFunc("/basicEventCreate", functions.BasicCreateEventPage)
 	fmt.Println("Server is running at: http://localhost:8080")
 	err := http.ListenAndServe("0.0.0.0:8080", nil)
 	if errors.Is(err, http.ErrServerClosed) {

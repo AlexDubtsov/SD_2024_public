@@ -130,6 +130,87 @@ a {
     background-color: rgb(11, 131, 111);
 }
 
+.eventButton {
+    display: inline-block;
+    padding: 10px 40px;
+    margin: 5px;
+    background-color: #acacac;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.eventButton:hover {
+    background-color: #c4c4c4;
+}
+
+.createEventButton {
+    width: 99%;
+    display: inline-block;
+    margin: 5px 5px 5px 5px;
+    background-color: #61ac7a;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.createEventButton:hover {
+    background-color: #79d899;
+}
+
+.basic_eventsListButtons {
+    width: 100%;
+    display: flex;
+}
+
+.createEventOkButton {
+    width: 99%;
+    display: inline-block;
+    margin: 5px 5px 5px 5px;
+    background-color: #61ac7a;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.createEventOkButton:hover {
+    background-color: #79d899;
+}
+
+.createEventBackButton {
+    width: 99%;
+    display: inline-block;
+    margin: 5px 5px 5px 5px;
+    background-color: #726dc2;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.createEventBackButton:hover {
+    background-color: #8382e7;
+}
+
 .maincontainer {
     width: 3000px;
     max-width: 90%;
@@ -151,4 +232,34 @@ a {
     font-size: 24px;
     color: #000000;
     margin-top: -7px;
+}
+
+.basic_maincontainer {
+    width: 3000px;
+    max-width: 90%;
+    min-height: 83%;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 1cm rgba(0, 0, 0, 0.4);
+    text-align: left;
+    background: rgb(230, 230, 230);
+    /* Added more styles */
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.inputInfo {
+    margin: 1vh;
+}
+
+textarea {
+    width: 100%; /* Set the width of the textarea to 85% of the surrounding div */
+    box-sizing: border-box; /* Include padding and border in the element's total width */
+}
+
+label {
+    font-size: 3vh;
 }
