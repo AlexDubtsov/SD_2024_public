@@ -9,15 +9,82 @@ a {
     text-decoration: none;
 }
 
-.container {
-    max-width: 600px;
+/* *** ALL PAGES *** */
+
+.basic_maincontainer {
+    width: 3000px;
+    max-width: 90%;
+    min-height: 83%;
     margin: 0 auto;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 1cm rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    box-shadow: 0 0 2cm rgba(0, 0, 0, 0.4);
+    text-align: left;
+    background: rgb(230, 230, 230);
+    position: absolute;
+    top: 5%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
+.basic_maincontainer h1{
+    text-align: center;
+    width: 100%;
+}
+
+.basic_elements {
+    width: 100%;
+    display: flex;
+}
+
+.basic_wideGreenButton {
+    width: 99%;
+    display: inline-block;
+    margin: 5px 5px 5px 5px;
+    background-color: #61ac7a;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.basic_wideGreenButton:hover {
+    background-color: #79d899;
+}
+
+.basic_wideBlueButton {
+    width: 99%;
+    display: inline-block;
+    margin: 5px 5px 5px 5px;
+    background-color: #726dc2;
+    color: #000000;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.basic_wideBlueButton:hover {
+    background-color: #8382e7;
+}
+
+/* *** INDEX PAGE *** */
+
+.container {
+    /* width: 400px; */
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 0 2cm rgba(0, 0, 0, 0.4);
     text-align: center;
     background: rgb(230, 230, 230);
-    /* Added more styles */
     position: absolute;
     top: 50%;
     left: 50%;
@@ -27,13 +94,13 @@ a {
 .container h1 {
     font-size: 24px;
     color: #000000;
-    padding: 10px;
+    /* padding: 10px; */
 }
 
 .container p {
     font-size: 18px;
     color: #000000;
-    padding: 10px;
+    padding: 0px;
 }
 
 .button-container {
@@ -130,7 +197,8 @@ a {
     background-color: rgb(11, 131, 111);
 }
 
-.eventButton {
+/* *** EVENTS LIST PAGE *** */
+.singleEventButton {
     display: inline-block;
     padding: 10px 40px;
     margin: 5px;
@@ -144,32 +212,35 @@ a {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.eventButton:hover {
+.singleEventButton:hover {
     background-color: #c4c4c4;
 }
-
-.createEventButton {
-    width: 99%;
+/* *** EVENT CREATE PAGE *** */
+.inlineFields {
     display: inline-block;
-    margin: 5px 5px 5px 5px;
-    background-color: #61ac7a;
-    color: #000000;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    text-decoration: none;
-    text-align: center;
-    cursor: pointer;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-.createEventButton:hover {
-    background-color: #79d899;
-}
-
-.basic_eventsListButtons {
     width: 100%;
-    display: flex;
+}
+
+.eventBasicData {
+    display: inline-block;
+    margin: 1vh;
+    font-weight: 600;
+    font-size: 2vh;
+    text-align: center;
+}
+
+.eventData {
+    width: 100%;
+    font-weight: 600;
+    font-size: 3vh;
+    text-align: center;
+}
+
+.insertData {
+    width: 100%;
+    min-width: 850px;
+    min-height: 200px;
+    font-size: 2vh;
 }
 
 .createEventOkButton {
@@ -192,25 +263,27 @@ a {
     background-color: #79d899;
 }
 
-.createEventBackButton {
+.deleteEventButton {
     width: 99%;
     display: inline-block;
     margin: 5px 5px 5px 5px;
-    background-color: #726dc2;
+    background-color: #ac6161;
     color: #000000;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 24px;
+    font-weight: bold;
     text-decoration: none;
     text-align: center;
     cursor: pointer;
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.createEventBackButton:hover {
-    background-color: #8382e7;
+.deleteEventButton:hover {
+    background-color: #d87979;
 }
 
+/* 
 .maincontainer {
     width: 3000px;
     max-width: 90%;
@@ -221,7 +294,6 @@ a {
     box-shadow: 0 0 1cm rgba(0, 0, 0, 0.4);
     text-align: center;
     background: rgb(230, 230, 230);
-    /* Added more styles */
     position: absolute;
     top: 5%;
     left: 50%;
@@ -234,32 +306,8 @@ a {
     margin-top: -7px;
 }
 
-.basic_maincontainer {
-    width: 3000px;
-    max-width: 90%;
-    min-height: 83%;
-    margin: 0 auto;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 1cm rgba(0, 0, 0, 0.4);
-    text-align: left;
-    background: rgb(230, 230, 230);
-    /* Added more styles */
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translate(-50%, 0%);
-}
 
-.inputInfo {
-    margin: 1vh;
-}
 
-textarea {
-    width: 100%; /* Set the width of the textarea to 85% of the surrounding div */
-    box-sizing: border-box; /* Include padding and border in the element's total width */
-}
 
-label {
-    font-size: 3vh;
-}
+
+ */

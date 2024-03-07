@@ -6,21 +6,16 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/AlexDubtsov/SD_2024_public/m/v2/functions"
-	"github.com/AlexDubtsov/SD_2024_public/m/v2/helpers"
+	"github.com/AlexDubtsov/SD_2024_public/m/v2/webhandler"
 )
 
 func main() {
-	// Create DB (in case of absence)
-	if helpers.DB == nil {
-		helpers.DBcreate()
-	}
 
 	fileserver := http.FileServer(http.Dir("./static/"))
 	http.Handle("/", fileserver)
-	http.HandleFunc("/basicList", functions.BasicProcessListPage)
-	http.HandleFunc("/basicEvent", functions.BasicProcessEventPage)
-	http.HandleFunc("/basicEventCreate", functions.BasicCreateEventPage)
+	http.HandleFunc("/basicList", webhandler.BasicListEventsHandler)
+	http.HandleFunc("/basicEventEdit", webhandler.BasicEditEventHandler)
+	http.HandleFunc("/basicEventCreate", webhandler.BasicCreateEventHandler)
 	fmt.Println("Server is running at: http://localhost:8080")
 	err := http.ListenAndServe("0.0.0.0:8080", nil)
 	if errors.Is(err, http.ErrServerClosed) {

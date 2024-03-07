@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SD Event {{ .EventID }}</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="shortcut icon" href="https://static.tildacdn.net/tild3763-3764-4233-a262-663139366634/favicon.ico" type="image/x-icon">
+    </head>
+    <body class="background-image">
+        <div class="basic_maincontainer">
+            <form action="/basicEventCreate" method="post">
+                <div class="inputInfo">
+                    Event ID<br>{{if .EventID}}{{.EventID}}{{end}}
+                </div>
+                <div class="inputInfo">
+                    <label for="EventName">Event Name</label>
+                    <textarea name="EventName" rows="1" cols="100" placeholder="...Event Name...">{{if .EventName}}{{.EventName}}{{end}}</textarea>
+                </div>
+                <div class="inputInfo">
+                    <label for="EventDate">Event Date</label>
+                    <textarea name="EventDate" rows="1" cols="100" placeholder="...Event Date...">{{if .EventDate}}{{.EventDate}}{{end}}</textarea>
+                </div>
+                <div class="inputInfo">
+                    <label for="inputText">Add participants info here.<br>EMAIL NAME GENDER PHONE</label>
+                    <textarea name="inputText" rows="5" cols="100" placeholder="...Participants Info...">{{if .Text}}{{.Text}}{{end}}</textarea>
+                </div>
+                <div class="inputInfo">
+                    <h2>{{if .Message}}{{.Message}}{{end}}</h2>
+                </div>
+                <div class="basic_eventsListButtons">
+                    <input type="submit" name="action" value="Save changes" class="createEventOkButton">
+                    <input type="submit" name="action" value="Delete event" class="deleteEventButton">
+                    <a href="basicList" class="createEventBackButton"><h2>Go back</h2></a>
+                </div>
+                {{ range .Participants }}
+                    <div class="participantsInfo">
+                        <label for="Like">№{{.BageID}}, {{.Name}} gives like to:</label>
+                        <textarea name="Like" rows="1" cols="100" placeholder="...Type like numbers, dividing with single space...">{{ .Likes }}</textarea>
+                    </div>
+                {{ end }}
+            </form>
+        </div>
+    </body>
+</html>
