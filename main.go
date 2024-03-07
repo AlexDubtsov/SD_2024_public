@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 
@@ -21,7 +22,8 @@ func main() {
 	if errors.Is(err, http.ErrServerClosed) {
 		fmt.Printf("Server closed\n")
 	} else if err != nil {
-		fmt.Printf("Error starting server: %s\n", err)
+		log.Fatal(err)
+		fmt.Printf("Error starting server")
 		os.Exit(1)
 	}
 }

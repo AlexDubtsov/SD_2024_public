@@ -2,6 +2,7 @@ package database
 
 import (
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/structures"
@@ -18,7 +19,8 @@ func Basic_Get_AllData() ([]structures.Basic_SinglePerson, int, int) {
 	// Query the database to get all records
 	records, err := DB.Query("SELECT ID, EMAIL, NAME, GENDER, PHONE, BAGE_ID_AT_EVENT, EVENT_ID, EVENT_NAME, EVENT_DATE, DATE_CREATED, LIKES, COMMENT FROM BASIC")
 	if err != nil {
-		fmt.Println("ERROR: Unable to read data base", err)
+		log.Fatal(err)
+		fmt.Println("ERROR: Unable to read data base")
 		os.Exit(1)
 	}
 	defer records.Close()
@@ -28,7 +30,8 @@ func Basic_Get_AllData() ([]structures.Basic_SinglePerson, int, int) {
 		var record structures.Basic_SinglePerson
 		err := records.Scan(&record.ID, &record.Email, &record.Name, &record.Gender, &record.Phone, &record.BageID, &record.EventID, &record.EventName, &record.EventDate, &record.Created, &record.Likes, &record.Comment)
 		if err != nil {
-			fmt.Println("ERROR: Unable to scan records: ", err)
+			log.Fatal(err)
+			fmt.Println("ERROR: Unable to scan records: ")
 			os.Exit(1)
 		}
 		allRecords = append(allRecords, record)
@@ -70,32 +73,30 @@ func Basic_Get_EventsList() []structures.Basic_SingleEvent {
 }
 
 // Function looks for all records with specific Event ID
-func Basic_Get_SingleEvent(eventID int) ([]structures.Basic_SinglePerson, string) {
+func Basic_Get_SingleEvent(templateData *structures.Template_Basic_EditEvent) {
 	var resultSlice []structures.Basic_SinglePerson
-	var errStr string
 
 	// Query the database to get all records
-	records, err := DB.Query("SELECT ID, EMAIL, NAME, GENDER, PHONE, BAGE_ID_AT_EVENT, EVENT_ID, EVENT_NAME, EVENT_DATE, DATE_CREATED, LIKES, COMMENT FROM BASIC where EVENT_ID = ?", eventID)
+	records, err := DB.Query("SELECT ID, EMAIL, NAME, GENDER, PHONE, BAGE_ID_AT_EVENT, EVENT_ID, EVENT_NAME, EVENT_DATE, DATE_CREATED, LIKES, COMMENT FROM BASIC where EVENT_ID = ?", templateData.ID)
 	if err != nil {
-		fmt.Println("ERROR: Unable to read data base", err)
-		errStr = "Unable to read data base in Event edit"
+		log.Fatal(err)
+		fmt.Println("ERROR: Unable to read data base")
+		templateData.Message = "Unable to read data base in Event edit"
+		return
 	}
 	defer records.Close()
 
-	// If no error on previous step
-	if len(errStr) == 0 {
-		// Iterate over the records; Add each record to Result
-		for records.Next() {
-			var person structures.Basic_SinglePerson
-			err := records.Scan(&person.ID, &person.Email, &person.Name, &person.Gender, &person.Phone, &person.BageID, &person.EventID, &person.EventName, &person.EventDate, &person.Created, &person.Likes, &person.Comment)
-			if err != nil {
-				fmt.Println("Error", err.Error())
-				errStr = "Unable to parse data in Event edit"
-				break
-			}
-			resultSlice = append(resultSlice, person)
+	// Iterate over the records; Add each record to Result
+	for records.Next() {
+		var person structures.Basic_SinglePerson
+		err := records.Scan(&person.ID, &person.Email, &person.Name, &person.Gender, &person.Phone, &person.BageID, &person.EventID, &person.EventName, &person.EventDate, &person.Created, &person.Likes, &person.Comment)
+		if err != nil {
+			log.Fatal(err)
+			fmt.Println("Unable to parse data in Event edit")
+			templateData.Message = "Unable to parse data in Event edit"
+			return
 		}
+		resultSlice = append(resultSlice, person)
 	}
-
-	return resultSlice, errStr
+	templateData.Slice_Participants = resultSlice
 }

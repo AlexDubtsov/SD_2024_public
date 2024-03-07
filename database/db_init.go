@@ -27,7 +27,8 @@ func DBopen() {
 	var err error
 	DB, err = sql.Open("sqlite3", dbAddress)
 	if err != nil {
-		fmt.Println("Error opening database:", err)
+		fmt.Println("Error opening database")
+		log.Fatal(err)
 		return
 	}
 }

@@ -18,7 +18,7 @@ func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {
 
 	// *** GET EVENT DATA FROM DB ***
 	// Get participants slice for Event ID
-	templateData.Slice_Participants, templateData.Message = database.Basic_Get_SingleEvent(templateData.ID)
+	database.Basic_Get_SingleEvent(&templateData)
 
 	//Get Event Name and Event Date from [0] record
 	templateData.Name = templateData.Slice_Participants[0].EventName
@@ -44,18 +44,25 @@ func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {
 			// If name or date changed => to change all records this event
 			if formName != templateData.Name || formDate != templateData.Date {
 				// Save changes to data base
-				templateData = database.Basic_ChangeRecordsDB(templateData.ID, formName, formDate)
+				database.Basic_ChangeRecordsDB(&templateData, formName, formDate)
 				// Get participants slice for Event ID
 				// templateData.Slice_Participants, templateData.Message = database.Basic_Get_SingleEvent(templateData.ID)
 			}
 			// If there is something in formText
 			if len(formText) > 0 {
 				// Generating data structure for Create Page template
-				templateData = templProcessing.Processor_EditEvent(formName, formDate, formText, templateData.ID)
+				templProcessing.Processor_EditEvent(&templateData, formText)
 			}
 
 		} else if r.FormValue("action") == "Delete event" {
 
+			formText := r.FormValue("inputText")
+
+			if formText == templateData.Name {
+				database.Basic_DeleteEvent(&templateData)
+			} else {
+				templateData.Message = "To delete event: type Event Name to Participants Info area"
+			}
 		}
 	} else {
 		// If the request method is neither GET nor POST, return a bad request status.
