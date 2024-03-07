@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/structures"
-	"github.com/AlexDubtsov/SD_2024_public/m/v2/templates"
+	"github.com/AlexDubtsov/SD_2024_public/m/v2/templProcessing"
 )
 
 func BasicCreateEventHandler(w http.ResponseWriter, r *http.Request) {
@@ -23,7 +23,7 @@ func BasicCreateEventHandler(w http.ResponseWriter, r *http.Request) {
 			formDate := r.FormValue("inputEventDate")
 			formText := r.FormValue("inputText")
 			// Generating data structure for Create Page template
-			templateData = templates.Processor_CreateEvent(formName, formDate, formText)
+			templateData = templProcessing.Processor_CreateEvent(formName, formDate, formText)
 		}
 	} else {
 		// If the request method is neither GET nor POST, return a bad request status.

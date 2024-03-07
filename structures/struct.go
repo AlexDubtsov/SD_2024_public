@@ -37,3 +37,12 @@ type Template_Basic_CreateEvent struct {
 	Message            string
 	Slice_SinglePerson []Basic_SinglePerson
 }
+
+type Template_Basic_EditEvent struct {
+	ID                 int
+	Name               string
+	Date               string
+	Text               string
+	Message            string
+	Slice_Participants []Basic_SinglePerson
+}

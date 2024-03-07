@@ -38,7 +38,7 @@ func ParseFormText(formText string) ([]structures.Basic_SinglePerson, string) {
 		// Check if there are enough fields
 		if len(fields) != 4 {
 			err = true
-			errStr = "Invalid input line \"" + line + "\"\n"
+			errStr = "Participants info should be in format \"EMAIL NAME GENDER PHONE\". Issue with line: \"" + line + "\"\n"
 		} else if !isValidEmail(fields[0]) {
 			err = true
 			errStr = "Invalid Mail address in line \"" + line + "\"\n"

@@ -3,37 +3,42 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SD Event {{ .EventID }}</title>
+        <title>SD2024 Event {{if .ID}}{{.ID}}{{end}}</title>
         <link rel="stylesheet" href="styles.css">
         <link rel="shortcut icon" href="https://static.tildacdn.net/tild3763-3764-4233-a262-663139366634/favicon.ico" type="image/x-icon">
     </head>
-    <body class="background-image">
+    <body>
         <div class="basic_maincontainer">
-            <form action="/basicEventCreate" method="post">
-                <div class="inputInfo">
-                    Event ID<br>{{if .EventID}}{{.EventID}}{{end}}
+            <form action="/basicEventEdit" method="post">
+                <div class="inlineFields">
+                    <div class="eventBasicNumber">
+                        Event ID
+                        <textarea name="eventID" class="eventData" placeholder="Event ID" readonly>{{if .ID}}{{.ID}}{{end}}</textarea>
+                    </div>
+                    <div class="eventBasicData">
+                        Event Name
+                        <textarea name="inputEventName" class="eventData" placeholder="...Event Name...">{{if .Name}}{{.Name}}{{end}}</textarea>
+                    </div>
+                    <div class="eventBasicData">
+                        Event Date
+                        <textarea name="inputEventDate" class="eventData" placeholder="...Event Date...">{{if .Date}}{{.Date}}{{end}}</textarea>
+                    </div>
                 </div>
-                <div class="inputInfo">
-                    <label for="EventName">Event Name</label>
-                    <textarea name="EventName" rows="1" cols="100" placeholder="...Event Name...">{{if .EventName}}{{.EventName}}{{end}}</textarea>
+                <div class="eventBasicData">
+                    Add participants here: "EMAIL NAME GENDER PHONE"
                 </div>
-                <div class="inputInfo">
-                    <label for="EventDate">Event Date</label>
-                    <textarea name="EventDate" rows="1" cols="100" placeholder="...Event Date...">{{if .EventDate}}{{.EventDate}}{{end}}</textarea>
+                <div>
+                    <textarea name="inputText" class="addData" placeholder="...Participants Info...">{{if .Text}}{{.Text}}{{end}}</textarea>
                 </div>
-                <div class="inputInfo">
-                    <label for="inputText">Add participants info here.<br>EMAIL NAME GENDER PHONE</label>
-                    <textarea name="inputText" rows="5" cols="100" placeholder="...Participants Info...">{{if .Text}}{{.Text}}{{end}}</textarea>
-                </div>
-                <div class="inputInfo">
+                <div class="eventBasicData">
                     <h2>{{if .Message}}{{.Message}}{{end}}</h2>
                 </div>
-                <div class="basic_eventsListButtons">
-                    <input type="submit" name="action" value="Save changes" class="createEventOkButton">
-                    <input type="submit" name="action" value="Delete event" class="deleteEventButton">
-                    <a href="basicList" class="createEventBackButton"><h2>Go back</h2></a>
+                <div class="basic_elements">
+                    <input type="submit" name="action" value="Save" class="createEventOkButton">
+                    <a href="basicList" class="basic_wideBlueButton"><h2>Go back</h2></a>
+                    <input type="submit" name="action" value="Delete event" class="deleteButton">
                 </div>
-                {{ range .Participants }}
+                {{ range .Slice_Participants }}
                     <div class="participantsInfo">
                         <label for="Like">№{{.BageID}}, {{.Name}} gives like to:</label>
                         <textarea name="Like" rows="1" cols="100" placeholder="...Type like numbers, dividing with single space...">{{ .Likes }}</textarea>
