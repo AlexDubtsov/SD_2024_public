@@ -10,7 +10,7 @@ import (
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/filefunctions"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/structures"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/templProcessing"
-	"github.com/AlexDubtsov/SD_2024_public/m/v2/textprepare"
+	textprepare "github.com/AlexDubtsov/SD_2024_public/m/v2/textPrepare"
 )
 
 func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {

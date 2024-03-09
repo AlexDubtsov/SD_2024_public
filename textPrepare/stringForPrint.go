@@ -1,4 +1,4 @@
-package textprepare
+package textPrepare
 
 import (
 	"fmt"
