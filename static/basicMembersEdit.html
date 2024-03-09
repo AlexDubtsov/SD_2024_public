@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>SD2024 Memers of {{if .ID}}{{.ID}}{{end}}</title>
+        <link rel="stylesheet" href="styles.css">
+        <link rel="shortcut icon" href="https://static.tildacdn.net/tild3763-3764-4233-a262-663139366634/favicon.ico" type="image/x-icon">
+    </head>
+    <body>
+        <div class="basic_maincontainer">
+            <div class="basic_elements">
+                <a href="basicList" class="basic_wideBlueButton">Back to events list</a>
+            </div>
+            <div class="eventBasicData">
+                <h2>{{if .Message}}{{.Message}}{{end}}</h2>
+            </div>
+            {{ range .Slice_Participants }}
+                <div class="basic_singlePerson">
+                    <form action="/basicMembersEdit?eventID={{.EventID}}&participantID={{.ID}}" method="post">
+                        <div class="participantsInfo">
+                                Bage№{{.BageID}}, {{.Name}}
+                                <input type="submit" name="action" value="Delete" class="deleteButton">
+                                <input type="submit" name="action" value="Save" class="saveButton">
+                                <textarea name="Like" rows="1" class="participantsInfoTextarea" placeholder="...{{.Name}} likes. Divide them with single space...">{{ .Likes }}</textarea>
+                        </div>
+                        <div class="participantsInfo">
+                            <textarea name="Comment" rows="1" class="participantsInfoTextarea" placeholder="...Type comment for {{.Name}} here...">{{ .Comment }}</textarea>
+                        </div>
+                    </form>
+                </div>
+            {{ end }}
+        </div>
+    </body>
+</html>

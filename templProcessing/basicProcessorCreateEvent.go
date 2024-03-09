@@ -41,7 +41,17 @@ func Processor_CreateEvent(formName, formDate, formText string) structures.Templ
 		templateData.Message = "Error: " + errStr
 		return templateData
 	}
+	// Initial bage numbers for Male and Female
+	maleNr := 1
+	femaleNr := 2
 	for i := range slice_SinglePerson {
+		if slice_SinglePerson[i].Gender == "Male" {
+			slice_SinglePerson[i].BageID = maleNr
+			maleNr += 2
+		} else if slice_SinglePerson[i].Gender == "Female" {
+			slice_SinglePerson[i].BageID = femaleNr
+			femaleNr += 2
+		}
 		slice_SinglePerson[i].ID = maxID + 1
 		slice_SinglePerson[i].EventID = maxEventID + 1
 		slice_SinglePerson[i].EventName = formName
@@ -52,7 +62,7 @@ func Processor_CreateEvent(formName, formDate, formText string) structures.Templ
 	}
 
 	// Attempt to write NewData to DB
-	templateData.Message = database.Basic_WriteToDB(slice_SinglePerson)
+	templateData.Message = database.Basic_InsertToDB(slice_SinglePerson)
 	if len(templateData.Message) > 0 {
 		templateData.Message = "Error: " + templateData.Message
 	} else {

@@ -100,3 +100,37 @@ func Basic_Get_SingleEvent(templateData *structures.Template_Basic_EditEvent) {
 	}
 	templateData.Slice_Participants = resultSlice
 }
+
+// Function looks for all records with specific Event ID and returns Maximum Male BageID and Maximum Female BageID
+func Basic_Get_MaxBageID(templateData *structures.Template_Basic_EditEvent) (int, int) {
+	var maxMaleID, maxFemaleID int
+
+	// Query the database to get all records
+	records, err := DB.Query("SELECT ID, EMAIL, NAME, GENDER, PHONE, BAGE_ID_AT_EVENT, EVENT_ID, EVENT_NAME, EVENT_DATE, DATE_CREATED, LIKES, COMMENT FROM BASIC where EVENT_ID = ?", templateData.ID)
+	if err != nil {
+		log.Fatal(err)
+		fmt.Println("ERROR: Unable to read data base")
+		templateData.Message = "Unable to read data base in Event edit"
+		return 0, 0
+	}
+	defer records.Close()
+
+	// Iterate over the records; Add each record to Result
+	for records.Next() {
+		var person structures.Basic_SinglePerson
+		err := records.Scan(&person.ID, &person.Email, &person.Name, &person.Gender, &person.Phone, &person.BageID, &person.EventID, &person.EventName, &person.EventDate, &person.Created, &person.Likes, &person.Comment)
+		if err != nil {
+			log.Fatal(err)
+			fmt.Println("Unable to parse data in Event edit")
+			templateData.Message = "Unable to parse data in Event edit"
+			return 0, 0
+		}
+		if person.Gender == "Male" && person.BageID > maxMaleID {
+			maxMaleID = person.BageID
+		} else if person.Gender == "Female" && person.BageID > maxFemaleID {
+			maxFemaleID = person.BageID
+		}
+	}
+
+	return maxMaleID, maxFemaleID
+}

@@ -16,6 +16,7 @@ func main() {
 	http.Handle("/", fileserver)
 	http.HandleFunc("/basicList", webhandler.BasicListEventsHandler)
 	http.HandleFunc("/basicEventEdit", webhandler.BasicEditEventHandler)
+	http.HandleFunc("/basicMembersEdit", webhandler.BasicEditMembersHandler)
 	http.HandleFunc("/basicEventCreate", webhandler.BasicCreateEventHandler)
 	fmt.Println("Server is running at: http://localhost:8080")
 	err := http.ListenAndServe("0.0.0.0:8080", nil)

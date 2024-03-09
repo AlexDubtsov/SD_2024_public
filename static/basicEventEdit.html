@@ -34,16 +34,23 @@
                     <h2>{{if .Message}}{{.Message}}{{end}}</h2>
                 </div>
                 <div class="basic_elements">
-                    <input type="submit" name="action" value="Save" class="createEventOkButton">
-                    <a href="basicList" class="basic_wideBlueButton"><h2>Go back</h2></a>
+                    <input type="submit" name="action" value="Save event" class="createEventOkButton">
+                    <a href="basicList" class="basic_wideBlueButton">Go back</a>
                     <input type="submit" name="action" value="Delete event" class="deleteButton">
                 </div>
-                {{ range .Slice_Participants }}
-                    <div class="participantsInfo">
-                        <label for="Like">№{{.BageID}}, {{.Name}} gives like to:</label>
-                        <textarea name="Like" rows="1" cols="100" placeholder="...Type like numbers, dividing with single space...">{{ .Likes }}</textarea>
-                    </div>
-                {{ end }}
+                <div class="basic_elements">
+                    <input type="submit" name="action" value="Print Male" class="printMaleButton">
+                    <input type="submit" name="action" value="Print Female" class="printFemaleButton">
+                    <input type="submit" name="action" value="Print Calculations" class="printResultButton">
+                </div>
+            </form>
+            <form action="/basicMembersEdit" method="get">
+                <div class="basic_elements">
+                    <input type="hidden" name="eventID" value="{{ .ID }}">
+                    <button type="submit" id="processEvent" class="createEventOkButton">
+                        Edit members
+                    </button>
+                </div>
             </form>
         </div>
     </body>

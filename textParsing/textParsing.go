@@ -22,10 +22,6 @@ func ParseFormText(formText string) ([]structures.Basic_SinglePerson, string) {
 	var slice_SinglePerson []structures.Basic_SinglePerson
 	var errStr string
 	var err bool
-	var bageID int
-	// Initial bage numbers for Male and Female
-	maleNr := 1
-	femaleNr := 2
 
 	// Split input text into lines
 	lines := strings.Split(formText, "\n")
@@ -46,14 +42,6 @@ func ParseFormText(formText string) ([]structures.Basic_SinglePerson, string) {
 			err = true
 			errStr = "Invalid Gender in line \"" + line + "\"\n"
 		} else {
-			switch fields[2] {
-			case "Male":
-				bageID = maleNr
-				maleNr += 2
-			case "Female":
-				bageID = femaleNr
-				femaleNr += 2
-			}
 			// Create a UserData structure and append it to the array
 			tempBasicSinglePerson := structures.Basic_SinglePerson{
 				ID:        0,
@@ -61,7 +49,7 @@ func ParseFormText(formText string) ([]structures.Basic_SinglePerson, string) {
 				Name:      fields[1],
 				Gender:    fields[2],
 				Phone:     fields[3],
-				BageID:    bageID,
+				BageID:    0,
 				EventID:   0,
 				EventName: "",
 				EventDate: "",

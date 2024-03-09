@@ -1,13 +1,16 @@
 package webhandler
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
 
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/database"
+	"github.com/AlexDubtsov/SD_2024_public/m/v2/filefunctions"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/structures"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/templProcessing"
+	"github.com/AlexDubtsov/SD_2024_public/m/v2/textprepare"
 )
 
 func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {
@@ -33,8 +36,10 @@ func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {
 
 	} else if r.Method == http.MethodPost {
 
+		action := r.FormValue("action")
+
 		// If it's a POST request, check which button was clicked based on the "action" field.
-		if r.FormValue("action") == "Save" {
+		if action == "Save event" {
 
 			// Storing form values.
 			formName := r.FormValue("inputEventName")
@@ -44,7 +49,7 @@ func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {
 			// If name or date changed => to change all records this event
 			if formName != templateData.Name || formDate != templateData.Date {
 				// Save changes to data base
-				database.Basic_ChangeRecordsDB(&templateData, formName, formDate)
+				database.Basic_ChangeEventDB(&templateData, formName, formDate)
 				// Get participants slice for Event ID
 				// templateData.Slice_Participants, templateData.Message = database.Basic_Get_SingleEvent(templateData.ID)
 			}
@@ -54,7 +59,7 @@ func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {
 				templProcessing.Processor_EditEvent(&templateData, formText)
 			}
 
-		} else if r.FormValue("action") == "Delete event" {
+		} else if action == "Delete event" {
 
 			formText := r.FormValue("inputText")
 
@@ -63,6 +68,18 @@ func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {
 			} else {
 				templateData.Message = "To delete event: type Event Name to Participants Info area"
 			}
+			// } else if action == "Edit members" {
+			// 	fmt.Println("Edit members")
+		} else if action == "Print Male" {
+			filename := "Male.txt"
+			stringToPrint := textprepare.MalePrint(&templateData)
+			filefunctions.DownLoadFile(w, r, stringToPrint, filename)
+		} else if action == "Print Female" {
+			filename := "Female.txt"
+			stringToPrint := textprepare.FemalePrint(&templateData)
+			filefunctions.DownLoadFile(w, r, stringToPrint, filename)
+		} else if action == "Print Calculations" {
+			fmt.Println("Print Calculations")
 		}
 	} else {
 		// If the request method is neither GET nor POST, return a bad request status.

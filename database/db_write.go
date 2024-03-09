@@ -7,7 +7,7 @@ import (
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/structures"
 )
 
-func Basic_WriteToDB(slice_SinglePerson []structures.Basic_SinglePerson) string {
+func Basic_InsertToDB(slice_SinglePerson []structures.Basic_SinglePerson) string {
 	var errStr string
 	// Insert records to DB
 	for i := range slice_SinglePerson {
@@ -40,7 +40,7 @@ func Basic_WriteToDB(slice_SinglePerson []structures.Basic_SinglePerson) string 
 	return errStr
 }
 
-func Basic_ChangeRecordsDB(templateData *structures.Template_Basic_EditEvent, formName, formDate string) {
+func Basic_ChangeEventDB(templateData *structures.Template_Basic_EditEvent, formName, formDate string) {
 	// Start a DB transaction
 	tx, err := DB.Begin()
 	if err != nil {
@@ -88,6 +88,54 @@ func Basic_ChangeRecordsDB(templateData *structures.Template_Basic_EditEvent, fo
 	templateData.Message = "Updated Event Name, Event Date"
 }
 
+func Basic_ChangeMemberDB(templateData *structures.Template_Basic_EditEvent, participantID int, formLike, formComment string) {
+	// Start a DB transaction
+	tx, err := DB.Begin()
+	if err != nil {
+		log.Fatal(err)
+		templateData.Message = "Error on data base Begin"
+		return
+	}
+
+	// Query the database to get all transactions
+	records, err := tx.Query("SELECT ID, EMAIL, NAME, GENDER, PHONE, BAGE_ID_AT_EVENT, EVENT_ID, EVENT_NAME, EVENT_DATE, DATE_CREATED, LIKES, COMMENT FROM BASIC where ID = ?", participantID)
+	if err != nil {
+		log.Fatal(err)
+		templateData.Message = "Error in Query the database"
+		return
+	}
+	defer records.Close()
+
+	// Iterate through the records, update the EVENT_NAME and EVENT_DATE
+	for records.Next() {
+		var record structures.Basic_SinglePerson
+
+		err := records.Scan(&record.ID, &record.Email, &record.Name, &record.Gender, &record.Phone, &record.BageID, &record.EventID, &record.EventName, &record.EventDate, &record.Created, &record.Likes, &record.Comment)
+		if err != nil {
+			log.Fatal(err)
+			templateData.Message = "Error scanning record"
+			return
+		}
+
+		_, err = tx.Exec("UPDATE BASIC SET LIKES = ?, COMMENT = ? WHERE ID = ?", formLike, formComment, participantID)
+		if err != nil {
+			log.Fatal(err)
+			templateData.Message = "Error updating record"
+			return
+		}
+	}
+
+	// Commit the DB transaction
+	err = tx.Commit()
+	if err != nil {
+		log.Fatal(err)
+		templateData.Message = "Error on Commit to data base"
+		return
+	}
+
+	templateData.Message = "Updated Likes and Comments"
+}
+
 func Basic_DeleteEvent(templateData *structures.Template_Basic_EditEvent) {
 	// Prepare the SQL statement to delete a record by ID
 	statement, err := DB.Prepare("DELETE FROM BASIC WHERE EVENT_ID = ?")
@@ -104,4 +152,22 @@ func Basic_DeleteEvent(templateData *structures.Template_Basic_EditEvent) {
 		return
 	}
 	templateData.Message = "Event deleted"
+}
+
+func Basic_DeleteMember(templateData *structures.Template_Basic_EditEvent, participantID int) {
+	// Prepare the SQL statement to delete a record by ID
+	statement, err := DB.Prepare("DELETE FROM BASIC WHERE ID = ?")
+	if err != nil {
+		templateData.Message = "Error on DB.Prepare in Delete Member"
+		return
+	}
+	defer statement.Close()
+
+	// Execute the SQL statement
+	_, err = statement.Exec(participantID)
+	if err != nil {
+		templateData.Message = "Error on statement.Exec in Delete Member"
+		return
+	}
+	templateData.Message = "Member deleted"
 }
