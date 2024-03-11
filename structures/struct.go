@@ -46,3 +46,14 @@ type Template_Basic_EditEvent struct {
 	Message            string
 	Slice_Participants []Basic_SinglePerson
 }
+
+type Result_Basic struct {
+	ID          int
+	Email       string
+	Name        string
+	Phone       string
+	BageID      int
+	Likes       string
+	Comment     string
+	Likes_Slice []string
+}

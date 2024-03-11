@@ -8,9 +8,10 @@ import (
 
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/database"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/filefunctions"
+	"github.com/AlexDubtsov/SD_2024_public/m/v2/resultCalculations"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/structures"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/templProcessing"
-	textprepare "github.com/AlexDubtsov/SD_2024_public/m/v2/textPrepare"
+	"github.com/AlexDubtsov/SD_2024_public/m/v2/textPrepare"
 )
 
 func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {
@@ -71,15 +72,17 @@ func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {
 			// } else if action == "Edit members" {
 			// 	fmt.Println("Edit members")
 		} else if action == "Print Male" {
-			filename := "Male.txt"
-			stringToPrint := textprepare.MalePrint(&templateData)
+			filename := fmt.Sprint(templateData.ID) + "; " + templateData.Name + "; " + templateData.Date + " Male.txt"
+			stringToPrint := textPrepare.MalePrint(&templateData)
 			filefunctions.DownLoadFile(w, r, stringToPrint, filename)
 		} else if action == "Print Female" {
-			filename := "Female.txt"
-			stringToPrint := textprepare.FemalePrint(&templateData)
+			filename := fmt.Sprint(templateData.ID) + "; " + templateData.Name + "; " + templateData.Date + " Female.txt"
+			stringToPrint := textPrepare.FemalePrint(&templateData)
 			filefunctions.DownLoadFile(w, r, stringToPrint, filename)
 		} else if action == "Print Calculations" {
-			fmt.Println("Print Calculations")
+			filename := fmt.Sprint(templateData.ID) + "; " + templateData.Name + "; " + templateData.Date + " results.txt"
+			stringToPrint := resultCalculations.ResultPrint(&templateData)
+			filefunctions.DownLoadFile(w, r, stringToPrint, filename)
 		}
 	} else {
 		// If the request method is neither GET nor POST, return a bad request status.
