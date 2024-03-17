@@ -9,7 +9,15 @@
     </head>
     <body>
         <div class="basic_maincontainer">
-            <h1>Events</h1>
+            <div class="inlineFields">
+                <h1>Events</h1>
+                <form action="/basicList" method="post">
+                    <input type="hidden" name="save" value="SaveDB">
+                    <button type="submit" id="saveBtn" class="saveButton">
+                        Save to Cloud
+                    </button>
+                </form>
+            </div>
             <div class="basic_elements">
                 <a href="basicEventCreate" class="basic_wideGreenButton">Create new</a>
                 <a href="/" class="basic_wideBlueButton">Go back</a>

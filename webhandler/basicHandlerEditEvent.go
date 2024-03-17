@@ -65,40 +65,58 @@ func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {
 			formText := r.FormValue("inputText")
 
 			if formText == templateData.Name {
+
 				database.Basic_DeleteEvent(&templateData)
+
 			} else {
+
 				templateData.Message = "To delete event: type Event Name to Participants Info area"
+
 			}
-			// } else if action == "Edit members" {
-			// 	fmt.Println("Edit members")
+
 		} else if action == "Print Male" {
+
 			filename := fmt.Sprint(templateData.ID) + "; " + templateData.Name + "; " + templateData.Date + " Male.txt"
 			stringToPrint := textPrepare.MalePrint(&templateData)
 			filefunctions.DownLoadFile(w, r, stringToPrint, filename)
+
 		} else if action == "Print Female" {
+
 			filename := fmt.Sprint(templateData.ID) + "; " + templateData.Name + "; " + templateData.Date + " Female.txt"
 			stringToPrint := textPrepare.FemalePrint(&templateData)
 			filefunctions.DownLoadFile(w, r, stringToPrint, filename)
+
 		} else if action == "Print Calculations" {
+
 			filename := fmt.Sprint(templateData.ID) + "; " + templateData.Name + "; " + templateData.Date + " results.txt"
 			stringToPrint := resultCalculations.ResultPrint(&templateData)
 			filefunctions.DownLoadFile(w, r, stringToPrint, filename)
+
 		}
 	} else {
+
 		// If the request method is neither GET nor POST, return a bad request status.
 		http.Error(w, "Wrong method", http.StatusBadRequest)
 		return
+
 	}
 
 	// Parse the HTML template file.
 	tmpl, err := template.ParseFiles("./static/basicEventEdit.html")
+
 	if err != nil {
+
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
+
 	}
+
 	// Execute the template with the data and write the response.
 	err = tmpl.Execute(w, templateData)
+
 	if err != nil {
+
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+
 	}
 }
