@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"time"
 
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/console"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/database"
@@ -15,20 +16,37 @@ func BasicListEventsHandler(w http.ResponseWriter, r *http.Request) {
 	var templateData structures.Template_Basic_ListEvents
 	templateData.Slice_SingleEvent = database.Basic_Get_EventsList()
 
-	// *** PROCESSING SAVE BUTTON ***
+	// Get the current time
+	currentTime := time.Now()
+
+	// *** PROCESSING DB BUTTONS ***
 	// Check the HTTP request method.
 	if r.Method == http.MethodGet {
+
+		// Compare current time with last DB load
+		if currentTime.After(console.NextDBload) {
+
+			console.ConsoleLoad()
+
+			// Save current time + 1 hour to LastDBload
+			console.NextDBload = currentTime.Add(time.Hour)
+
+		}
 
 		// If it's a GET request, return a 200 OK status.
 		w.WriteHeader(http.StatusOK)
 
 	} else if r.Method == http.MethodPost {
 
-		save := r.FormValue("save")
+		act := r.FormValue("sync")
 
-		if save == "SaveDB" {
+		if act == "Save to Cloud" {
 
 			console.ConsoleSave()
+
+		} else if act == "Load from Cloud" {
+
+			console.ConsoleLoad()
 
 		}
 

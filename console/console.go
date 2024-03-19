@@ -9,6 +9,9 @@ import (
 	"time"
 )
 
+var NextDBload time.Time
+var NextDBsave time.Time
+
 func dbFolderPath() (string, error) {
 	// Name of folder with DB
 	var dbFolderName = "SD_2024_private"
@@ -55,7 +58,7 @@ func ConsoleSave() {
 	fmt.Println(string(output1))
 
 	// Create and configure the second command
-	cmd2 := exec.Command("git", "commit", "-m", "\"Save with button\"")
+	cmd2 := exec.Command("git", "commit", "-m", "\"Save DB\"")
 	cmd2.Dir = dbPath
 
 	// Execute the second command
@@ -91,4 +94,39 @@ func ConsoleSave() {
 	formattedTime := currentTime.Format("2006-01-02 15:04:05")
 
 	fmt.Println("Saved on", formattedTime)
+}
+
+func ConsoleLoad() {
+
+	dbPath, err := dbFolderPath()
+
+	if err != nil {
+		fmt.Println("Error on getting DB path")
+		log.Fatal(err)
+		return
+	}
+
+	// Create and configure the first command
+	cmd1 := exec.Command("git", "pull")
+	cmd1.Dir = dbPath
+
+	// Execute the first command
+	output1, err := cmd1.Output()
+	if err != nil {
+		fmt.Println("Error executing the GIT PULL")
+		log.Fatal(err)
+		return
+	}
+
+	// Output the result of the first command
+	fmt.Println(string(output1))
+
+	// Get the current time
+	currentTime := time.Now()
+
+	// Format the current time in an easy-to-read format
+	formattedTime := currentTime.Format("2006-01-02 15:04:05")
+
+	fmt.Println("DB loaded on", formattedTime)
+
 }

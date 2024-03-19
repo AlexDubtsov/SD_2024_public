@@ -5,7 +5,9 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
+	"time"
 
+	"github.com/AlexDubtsov/SD_2024_public/m/v2/console"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/database"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/structures"
 )
@@ -28,17 +30,24 @@ func BasicEditMembersHandler(w http.ResponseWriter, r *http.Request) {
 
 	} else if r.Method == http.MethodPost {
 
+		// Get the current time
+		currentTime := time.Now()
+
 		action := r.FormValue("action")
 		participantID, _ := strconv.Atoi(r.FormValue("participantID"))
 		var tempID int
+
 		for i := range templateData.Slice_Participants {
+
 			if templateData.Slice_Participants[i].ID == participantID {
 				tempID = i
 			}
+
 		}
 
 		// If it's a POST request, check which button was clicked based on the "action" field.
 		if action == "Save" {
+
 			// Storing form values.
 			formLike := r.FormValue("Like")
 			formComment := r.FormValue("Comment")
@@ -46,18 +55,34 @@ func BasicEditMembersHandler(w http.ResponseWriter, r *http.Request) {
 			templateData.Slice_Participants[tempID].Likes = formLike
 			templateData.Slice_Participants[tempID].Comment = formComment
 			database.Basic_ChangeMemberDB(&templateData, participantID, formLike, formComment)
+
 		} else if action == "Delete" {
+
 			formComment := r.FormValue("Comment")
 			if fmt.Sprint(templateData.Slice_Participants[tempID].BageID) == formComment {
 				database.Basic_DeleteMember(&templateData, participantID)
 			} else {
 				templateData.Message = "Type Bage№ to Comment"
 			}
+
 		}
+
+		// Compare current time with last DB save
+		if currentTime.After(console.NextDBsave) {
+
+			console.ConsoleSave()
+
+			// Save current time + 1 hour to LastDBload
+			console.NextDBsave = currentTime.Add(15 * time.Minute)
+
+		}
+
 	} else {
+
 		// If the request method is neither GET nor POST, return a bad request status.
 		http.Error(w, "Wrong method", http.StatusBadRequest)
 		return
+
 	}
 
 	// Parse the HTML template file.

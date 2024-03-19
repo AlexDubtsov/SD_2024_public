@@ -15,7 +15,7 @@ func DownLoadFile(w http.ResponseWriter, r *http.Request, content, filename stri
 
 	_, err := fmt.Fprint(w, content)
 	if err != nil {
-		http.Error(w, "Error on sending ASCII Art", http.StatusInternalServerError)
+		http.Error(w, "Error on printing text content", http.StatusInternalServerError)
 		return
 	}
 }

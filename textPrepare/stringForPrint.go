@@ -34,6 +34,9 @@ func printTablePrepare(inputStruct []structures.Basic_SinglePerson) string {
 	var resultString string
 	for i := range inputStruct {
 		resultString = resultString + fmt.Sprint(inputStruct[i].BageID) + "\t" + inputStruct[i].Name + "\t" + inputStruct[i].Email + "\t" + inputStruct[i].Phone
+		if len(inputStruct[i].Comment) > 0 {
+			resultString = resultString + "\t" + inputStruct[i].Comment
+		}
 		if i < len(inputStruct)-1 {
 			resultString = resultString + "\n"
 		}

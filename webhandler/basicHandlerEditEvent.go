@@ -5,7 +5,9 @@ import (
 	"html/template"
 	"net/http"
 	"strconv"
+	"time"
 
+	"github.com/AlexDubtsov/SD_2024_public/m/v2/console"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/database"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/filefunctions"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/resultCalculations"
@@ -36,6 +38,9 @@ func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 
 	} else if r.Method == http.MethodPost {
+
+		// Get the current time
+		currentTime := time.Now()
 
 		action := r.FormValue("action")
 
@@ -76,23 +81,34 @@ func BasicEditEventHandler(w http.ResponseWriter, r *http.Request) {
 
 		} else if action == "Print Male" {
 
-			filename := fmt.Sprint(templateData.ID) + "; " + templateData.Name + "; " + templateData.Date + " Male.txt"
+			filename := fmt.Sprint(templateData.ID) + " " + templateData.Name + " " + templateData.Date + " Male.txt"
 			stringToPrint := textPrepare.MalePrint(&templateData)
 			filefunctions.DownLoadFile(w, r, stringToPrint, filename)
 
 		} else if action == "Print Female" {
 
-			filename := fmt.Sprint(templateData.ID) + "; " + templateData.Name + "; " + templateData.Date + " Female.txt"
+			filename := fmt.Sprint(templateData.ID) + " " + templateData.Name + " " + templateData.Date + " Female.txt"
 			stringToPrint := textPrepare.FemalePrint(&templateData)
 			filefunctions.DownLoadFile(w, r, stringToPrint, filename)
 
 		} else if action == "Print Calculations" {
 
-			filename := fmt.Sprint(templateData.ID) + "; " + templateData.Name + "; " + templateData.Date + " results.txt"
+			filename := fmt.Sprint(templateData.ID) + " " + templateData.Name + " " + templateData.Date + " results.txt"
 			stringToPrint := resultCalculations.ResultPrint(&templateData)
 			filefunctions.DownLoadFile(w, r, stringToPrint, filename)
 
 		}
+
+		// Compare current time with last DB save
+		if currentTime.After(console.NextDBsave) {
+
+			console.ConsoleSave()
+
+			// Save current time + 1 hour to LastDBload
+			console.NextDBsave = currentTime.Add(15 * time.Minute)
+
+		}
+
 	} else {
 
 		// If the request method is neither GET nor POST, return a bad request status.
