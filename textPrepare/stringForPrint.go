@@ -9,24 +9,28 @@ import (
 func MalePrint(templateData *structures.Template_Basic_EditEvent) string {
 	var males []structures.Basic_SinglePerson
 
+	initString := templateData.Name + "\t" + templateData.Date + "\t" + "MALE" + "\n\n"
+
 	for i := range templateData.Slice_Participants {
 		if templateData.Slice_Participants[i].Gender == "Male" {
 			males = append(males, templateData.Slice_Participants[i])
 		}
 	}
-	stringForPrint := printTablePrepare(males)
+	stringForPrint := initString + printTablePrepare(males)
 	return stringForPrint
 }
 
 func FemalePrint(templateData *structures.Template_Basic_EditEvent) string {
 	var females []structures.Basic_SinglePerson
 
+	initString := templateData.Name + "\t" + templateData.Date + "\t" + "FEMALE" + "\n\n"
+
 	for i := range templateData.Slice_Participants {
 		if templateData.Slice_Participants[i].Gender == "Female" {
 			females = append(females, templateData.Slice_Participants[i])
 		}
 	}
-	stringForPrint := printTablePrepare(females)
+	stringForPrint := initString + printTablePrepare(females)
 	return stringForPrint
 }
 

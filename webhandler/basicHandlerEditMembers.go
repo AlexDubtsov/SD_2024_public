@@ -9,6 +9,7 @@ import (
 
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/console"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/database"
+	"github.com/AlexDubtsov/SD_2024_public/m/v2/sorting"
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/structures"
 )
 
@@ -84,6 +85,9 @@ func BasicEditMembersHandler(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
+
+	// Sort participants
+	sorting.Basic_SortingAll(&templateData)
 
 	// Parse the HTML template file.
 	tmpl, err := template.ParseFiles("./static/basicMembersEdit.html")
