@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/AlexDubtsov/SD_2024_public/m/v2/console"
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -14,6 +15,9 @@ var DB *sql.DB
 
 // Initialize the database connection
 func init() {
+	// Load latest DB from Cloud
+	console.ConsoleLoad()
+
 	// Initialize the database connection
 	DBopen()
 
