@@ -2,6 +2,7 @@ package resultCalculations
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/AlexDubtsov/SD_2024_public/m/v2/structures"
@@ -65,7 +66,12 @@ func likesConvertToSlice(all_Members_Result *[]structures.Result_Basic) {
 }
 
 func collectPrintString(all_Members_Result *[]structures.Result_Basic) string {
+
+	resultHeader := "Total likes on this event: "
+	totalLikes := 0
+
 	var resultString string
+
 	// Check if the pointer is not nil
 	if all_Members_Result == nil {
 		fmt.Println("Pointer == nil for some reason #1")
@@ -91,11 +97,15 @@ func collectPrintString(all_Members_Result *[]structures.Result_Basic) string {
 					tempBageID := fmt.Sprint(members[k].BageID)
 					if members[i].Likes_Slice[j] == tempBageID {
 						resultString = resultString + tempBageID + " " + members[k].Name + "\n" + members[k].Email + "\n\n"
+						totalLikes++
 					}
 				}
 			}
 		}
 	}
+
+	resultString = resultHeader + strconv.Itoa(totalLikes/2) + "\n\n" + resultString
+
 	return resultString
 }
 
