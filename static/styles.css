@@ -34,7 +34,7 @@ a {
 
 .basic_elements {
     width: 100%;
-    display: flex;
+    margin: 5px;
     height: 8vh;
 }
 
@@ -201,8 +201,8 @@ a {
 
 /* *** EVENTS LIST PAGE *** */
 .singleEventButton {
+    width: 99%;
     display: inline-block;
-    padding: 10px 40px;
     margin: 5px;
     background-color: #acacac;
     color: #000000;

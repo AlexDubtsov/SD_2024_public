@@ -53,7 +53,8 @@ func Basic_Get_EventsList() []structures.Basic_SingleEvent {
 	var slice_AllEvents []structures.Basic_SingleEvent
 	allRecords, _, _ := Basic_Get_AllData()
 
-	for i := range allRecords {
+	// for i := range allRecords {
+	for i := len(allRecords) - 1; i >= 0; i-- {
 		duplicate := false
 		for k := range slice_AllEvents {
 			if allRecords[i].EventID == slice_AllEvents[k].ID {
