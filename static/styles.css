@@ -36,6 +36,7 @@ a {
     width: 100%;
     margin: 5px;
     height: 8vh;
+    display:table;
 }
 
 .basic_wideGreenButton {
